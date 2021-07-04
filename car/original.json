@@ -1,0 +1,23 @@
+{
+	"age": "10",
+	"speed": "4.5",
+	"name": "German",
+	"size": {
+		"x": "1337.0",
+		"y": "420.0",
+		"letters": [
+			"d",
+			"e"
+		]
+	},
+	"isRed": "false",
+	"aLong": "85137",
+	"aByte": "-75",
+	"aChar": "\u001B",
+	"aShort": "763",
+	"names": [
+		"Audi",
+		"BMW",
+		"Mercedes"
+	]
+}
