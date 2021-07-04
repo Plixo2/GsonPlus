@@ -1,5 +1,7 @@
 package test.car;
 
+import org.plixo.jrcos.Mapping;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class Vector2D {
     /**
      * empty constructor for new object creation
      * make sure that after that all fields (except primitives, arrays or other classes with an empty constructor) are not null
-     * you also could make an Adapter in {@link serializer.Mapping} with {@link serializer.Mapping.IObjectCreation}
+     * you also could make an Adapter in {@link Mapping} with {@link Mapping.IObjectCreation}
      */
     public Vector2D() {
         this.x = 0;

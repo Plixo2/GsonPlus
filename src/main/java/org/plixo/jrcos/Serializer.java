@@ -1,4 +1,4 @@
-package serializer;
+package org.plixo.jrcos;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

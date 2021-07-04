@@ -2,8 +2,8 @@ package test;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import serializer.Initializer;
-import serializer.Serializer;
+import org.plixo.jrcos.Initializer;
+import org.plixo.jrcos.Serializer;
 import test.arrays.World;
 import test.other.Util;
 
