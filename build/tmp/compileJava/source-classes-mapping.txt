@@ -1,23 +1,23 @@
 test/other/Util.java
  test.other.Util
+test/arrays/GreenCube.java
+ test.arrays.GreenCube
+test/car/Car.java
+ test.car.Car
+test/arrays/Cube.java
+ test.arrays.Cube
+test/car/Vector2D.java
+ test.car.Vector2D
+serializer/Serializer.java
+ serializer.Serializer
 serializer/Mapping.java
  serializer.Mapping
  serializer.Mapping$IObjectCreation
  serializer.Mapping$IObjectValue
-test/car/Car.java
- test.car.Car
-serializer/ClassSerializer.java
- serializer.ClassSerializer
-test/car/Vector2D.java
- test.car.Vector2D
-test/arrays/GreenCube.java
- test.arrays.GreenCube
 test/arrays/World.java
  test.arrays.World
-test/arrays/Cube.java
- test.arrays.Cube
-serializer/ClassInitializer.java
- serializer.ClassInitializer
+serializer/Initializer.java
+ serializer.Initializer
 test/WorldTest.java
  test.WorldTest
 test/CarTest.java
