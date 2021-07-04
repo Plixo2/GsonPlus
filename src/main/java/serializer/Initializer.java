@@ -41,6 +41,9 @@ public class Initializer {
 
             for (int i = 0; i < safeIterationSize; i++) {
                 JsonElement element = jsonArray.get(i);
+                if(objectArray[i] == null) {
+                    objectArray[i] = createInstance(objectArray.getClass().getComponentType());
+                }
                 objectArray[i] = getObjectFromJson(objectArray[i], element);
             }
 
