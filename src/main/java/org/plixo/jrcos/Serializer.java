@@ -25,7 +25,7 @@ public class Serializer {
      *
      * @param object the object that should be saved. Also used for recursion.
      * @return a {@link JsonElement} for saving or recursive use in an {@link JsonObject}
-     * @throws IllegalAccessException
+     * @throws IllegalAccessException for illegal field access
      */
     public static JsonElement getJsonFromObject(Object object) throws IllegalAccessException {
 
@@ -37,7 +37,7 @@ public class Serializer {
 
         if (clazz.isArray() || object instanceof List) {
 
-            Object[] objectArray = (object instanceof List) ? ((List) object).toArray() : (Object[]) object;
+            Object[] objectArray = (object instanceof List) ? ((List<?>) object).toArray() : (Object[]) object;
             JsonArray jsonArray = new JsonArray();
             for (Object arrayObject : objectArray) {
                 JsonElement other = getJsonFromObject(arrayObject);
@@ -51,7 +51,8 @@ public class Serializer {
 
         } else if (Mapping.primitives.containsKey(clazz)) {
 
-            String value = Mapping.primitives.get(clazz).toString(object);
+            Mapping.IObjectValue<Object> iObjectValue = (Mapping.IObjectValue<Object>) Mapping.primitives.get(clazz);
+            String value = iObjectValue.toString(object);
             return new JsonPrimitive(value);
 
         } else {

@@ -13,7 +13,7 @@ import java.io.File;
 public class WorldTest {
 
     public static void main(String[] args) {
-        System.out.println("Serializer v1.1 2D World Array Example");
+        System.out.println("Serializer v1.2 2D World Array Example");
 
         File original = new File("world/original.json");
         try {

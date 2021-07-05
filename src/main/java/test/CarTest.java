@@ -14,7 +14,7 @@ import java.io.File;
 public class CarTest {
 
     public static void main(String[] args) {
-        System.out.println("Serializer v1.1 Car Example");
+        System.out.println("Serializer v1.2 Car Example");
 
         File original = new File("car/original.json");
 

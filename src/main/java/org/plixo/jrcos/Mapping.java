@@ -15,7 +15,7 @@ public class Mapping {
     /**
      * Used in {@link Initializer} and {@link Serializer}
      */
-    public static HashMap<Class<?>, IObjectValue> primitives = new HashMap<>();
+    public static HashMap<Class<?>, IObjectValue<?>> primitives = new HashMap<>();
 
     /**
      * Used in {@link Initializer} for creating classes
@@ -23,15 +23,61 @@ public class Mapping {
     public static HashMap<Class<?>, IObjectCreation> objectAdapters = new HashMap<>();
 
     /**
+     * should the default case be used if a value couldn't be found or cast
+     */
+    public static boolean useDefaultCase = false;
+
+    /**
+     * should a exception be thrown when a object couldn't be created
+     */
+    public static boolean throwObjectNullException = false;
+
+    /**
+     * default case or every boolean
+     */
+    public static boolean defaultBooleanCase = false;
+
+    /**
+     * default case for every number
+     */
+    public static Number defaultNumberCase = 0;
+
+    /**
+     * default case for every character
+     */
+    public static char defaultCharacter = 0;
+
+    /**
+     * default case for every string
+     */
+    public static String defaultString = "";
+
+    /**
+     * default case for every class
+     */
+    public static Class<?> defaultClass = null;
+
+    /**
+     * default case for every object
+     */
+    public static Object defaultObject = null;
+
+    /**
      * should the instances be added or the list be overwritten
      */
     public static boolean overwriteLists = false;
+
+    /**
+     * should use an recursive function to get all fields in a class, including all superclasses
+     */
+    public static boolean recursiveFields = false;
+
 
     /*
      * Both Class and primitives are used.
      */
     static {
-        IObjectValue<Integer> integerIObjectValue = new IObjectValue<Integer>() {
+        IObjectValue<Integer> integerIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsInt();
@@ -39,7 +85,7 @@ public class Mapping {
 
             @Override
             public Integer getDefault() {
-                return 0;
+                return defaultNumberCase.intValue();
             }
 
             @Override
@@ -50,7 +96,7 @@ public class Mapping {
         primitives.put(int.class, integerIObjectValue);
         primitives.put(Integer.class, integerIObjectValue);
 
-        IObjectValue<Long> longIObjectValue = new IObjectValue<Long>() {
+        IObjectValue<Long> longIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsLong();
@@ -58,7 +104,7 @@ public class Mapping {
 
             @Override
             public Long getDefault() {
-                return 0L;
+                return defaultNumberCase.longValue();
             }
 
             @Override
@@ -69,7 +115,7 @@ public class Mapping {
         primitives.put(long.class, longIObjectValue);
         primitives.put(Long.class, longIObjectValue);
 
-        IObjectValue<Short> shortIObjectValue = new IObjectValue<Short>() {
+        IObjectValue<Short> shortIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsShort();
@@ -77,7 +123,7 @@ public class Mapping {
 
             @Override
             public Short getDefault() {
-                return 0;
+                return defaultNumberCase.shortValue();
             }
 
             @Override
@@ -88,7 +134,7 @@ public class Mapping {
         primitives.put(short.class, shortIObjectValue);
         primitives.put(Short.class, shortIObjectValue);
 
-        IObjectValue<Byte> byteIObjectValue = new IObjectValue<Byte>() {
+        IObjectValue<Byte> byteIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsByte();
@@ -96,7 +142,7 @@ public class Mapping {
 
             @Override
             public Byte getDefault() {
-                return 0;
+                return defaultNumberCase.byteValue();
             }
 
             @Override
@@ -107,7 +153,7 @@ public class Mapping {
         primitives.put(byte.class, byteIObjectValue);
         primitives.put(Byte.class, byteIObjectValue);
 
-        IObjectValue<Character> characterIObjectValue = new IObjectValue<Character>() {
+        IObjectValue<Character> characterIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsCharacter();
@@ -115,7 +161,7 @@ public class Mapping {
 
             @Override
             public Character getDefault() {
-                return 0;
+                return defaultCharacter;
             }
 
             @Override
@@ -126,7 +172,7 @@ public class Mapping {
         primitives.put(char.class, characterIObjectValue);
         primitives.put(Character.class, characterIObjectValue);
 
-        IObjectValue<Float> floatIObjectValue = new IObjectValue<Float>() {
+        IObjectValue<Float> floatIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsFloat();
@@ -134,7 +180,7 @@ public class Mapping {
 
             @Override
             public Float getDefault() {
-                return 0f;
+                return defaultNumberCase.floatValue();
             }
 
             @Override
@@ -145,7 +191,7 @@ public class Mapping {
         primitives.put(float.class, floatIObjectValue);
         primitives.put(Float.class, floatIObjectValue);
 
-        IObjectValue<Double> doubleIObjectValue = new IObjectValue<Double>() {
+        IObjectValue<Double> doubleIObjectValue = new IObjectValue<>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsDouble();
@@ -153,7 +199,7 @@ public class Mapping {
 
             @Override
             public Double getDefault() {
-                return 0d;
+                return defaultNumberCase.doubleValue();
             }
 
             @Override
@@ -164,7 +210,7 @@ public class Mapping {
         primitives.put(double.class, doubleIObjectValue);
         primitives.put(Double.class, doubleIObjectValue);
 
-        IObjectValue<Boolean> booleanIObjectValue = new IObjectValue<Boolean>() {
+        IObjectValue<Boolean> booleanIObjectValue = new IObjectValue<>() {
 
             @Override
             public Object toObject(JsonPrimitive primitive) {
@@ -173,7 +219,7 @@ public class Mapping {
 
             @Override
             public Boolean getDefault() {
-                return false;
+                return defaultBooleanCase;
             }
 
             @Override
@@ -184,7 +230,7 @@ public class Mapping {
         primitives.put(boolean.class, booleanIObjectValue);
         primitives.put(Boolean.class, booleanIObjectValue);
 
-        IObjectValue<String> stringIObjectValue = new IObjectValue<String>() {
+        IObjectValue<String> stringIObjectValue = new IObjectValue<>() {
 
             @Override
             public Object toObject(JsonPrimitive primitive) {
@@ -193,7 +239,7 @@ public class Mapping {
 
             @Override
             public String getDefault() {
-                return "";
+                return defaultString;
             }
 
             @Override
@@ -202,6 +248,30 @@ public class Mapping {
             }
         };
         primitives.put(String.class, stringIObjectValue);
+
+        IObjectValue<Class<?>> classIObjectValue = new IObjectValue<>() {
+
+            @Override
+            public Object toObject(JsonPrimitive primitive) {
+                try {
+                    return Class.forName(primitive.getAsString());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                return defaultClass;
+            }
+
+            @Override
+            public Class<?> getDefault() {
+                return defaultClass;
+            }
+
+            @Override
+            public String toString(Class<?> object) {
+                return object.getName();
+            }
+        };
+        primitives.put(Class.class, classIObjectValue);
 
         /* create Adapters here, or elsewhere in your code */
         //objectAdapter.put(Vector3D.class, () -> new Vector3D(0,0,0));

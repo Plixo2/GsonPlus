@@ -25,12 +25,12 @@ public class Initializer {
      * @param object     The object where values should be altered (or created).
      * @param jsonObject the {@link JsonElement} where the data for the object is stored. Also used for recursion.
      * @return the object again (used for the primitives in {@link Mapping} without using the pointer equivalent, like {@link Integer})
-     * @throws ReflectiveOperationException
+     * @throws ReflectiveOperationException for error in instance creation
      */
     public static Object getObjectFromJson(Object object, JsonElement jsonObject) throws ReflectiveOperationException {
 
-        if(object == null) {
-             throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
+        if (object == null) {
+            throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
         }
         if (jsonObject == null) {
             return null;
@@ -43,9 +43,9 @@ public class Initializer {
 
             for (int i = 0; i < safeIterationSize; i++) {
                 JsonObject toJsonObject = jsonArray.get(i).getAsJsonObject();
-                Map.Entry<String,JsonElement> entry = toJsonObject.entrySet().iterator().next();
+                Map.Entry<String, JsonElement> entry = toJsonObject.entrySet().iterator().next();
                 String className = entry.getKey();
-                if(objectArray[i] == null) {
+                if (objectArray[i] == null) {
                     objectArray[i] = createInstance(objectArray.getClass().getComponentType());
                 }
                 objectArray[i] = getObjectFromJson(objectArray[i], entry.getValue());
@@ -56,13 +56,13 @@ public class Initializer {
         } else if (object instanceof List) {
 
             JsonArray jsonArray = jsonObject.getAsJsonArray();
-            List list = (List) object;
-            if(Mapping.overwriteLists) {
+            List<Object> list = (List<Object>) object;
+            if (Mapping.overwriteLists) {
                 list.clear();
             }
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject toJsonObject = jsonArray.get(i).getAsJsonObject();
-                Map.Entry<String,JsonElement> entry = toJsonObject.entrySet().iterator().next();
+                Map.Entry<String, JsonElement> entry = toJsonObject.entrySet().iterator().next();
                 Class<?> clazz = Class.forName(entry.getKey());
                 Object newInstance = createInstance(clazz);
                 list.add(getObjectFromJson(newInstance, entry.getValue()));
@@ -71,14 +71,14 @@ public class Initializer {
 
         } else if (Mapping.primitives.containsKey(objectClass)) {
 
-            Mapping.IObjectValue iObjectValue = Mapping.primitives.get(objectClass);
+            Mapping.IObjectValue<?> iObjectValue = Mapping.primitives.get(objectClass);
             return iObjectValue.toObject(jsonObject.getAsJsonPrimitive());
 
         } else {
 
             for (Field field : objectClass.getFields()) {
 
-                if (Modifier.isFinal(field.getModifiers())) {
+                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers())) {
                     continue;
                 }
 
@@ -88,7 +88,7 @@ public class Initializer {
                 if (objectToUpdate == null) {
                     Class<?> type = (Class<?>) field.getGenericType();
                     objectToUpdate = createInstance(type);
-                    if (objectToUpdate == null) {
+                    if (objectToUpdate == null && Mapping.throwObjectNullException) {
                         throw new NullPointerException(type.getName() + " couldn't be created. " +
                                 "Create an adapter in the mapping class " +
                                 "or create an empty constructor in " + type.getName());
@@ -96,9 +96,17 @@ public class Initializer {
                     }
                 }
                 Object objectFromJson = getObjectFromJson(objectToUpdate, subObj);
-                if(objectFromJson == null && Mapping.primitives.containsKey(field.getType())) {
-                    objectFromJson = Mapping.primitives.get(field.getType()).getDefault();
+                if (objectFromJson == null) {
+                    if (!Mapping.useDefaultCase) {
+                        continue;
+                    }
+                    if (Mapping.primitives.containsKey(field.getType())) {
+                        objectFromJson = Mapping.primitives.get(field.getType()).getDefault();
+                    } else {
+                        objectFromJson = Mapping.defaultObject;
+                    }
                 }
+
                 field.set(object, objectFromJson);
             }
 
@@ -109,7 +117,7 @@ public class Initializer {
     /**
      * @param instanceClass the class of the dependent object
      * @return the created instance or null if a instance couldn't be created.
-     * @throws ReflectiveOperationException
+     * @throws ReflectiveOperationException for error in instance creation
      */
     static Object createInstance(Class<?> instanceClass) throws ReflectiveOperationException {
 
