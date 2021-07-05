@@ -47,7 +47,7 @@ Java Recursive Class Oriented Serializer
 ## Save
 
     // convert to Json
-    JsonElement toJson = Serializer.getJson(original);
+    JsonElement toJson = Serializer.getJson(dataReference);
     
     // and save
     Util.saveJsonObj(file,toJson);
@@ -57,7 +57,7 @@ Java Recursive Class Oriented Serializer
     // load from file
     JsonElement fromFile = Util.loadFromJson(file);
     
-    //create empty reference without data
+    // create empty reference without data
     Object emptyReference = new ArrayList<>();
     
     // load into the empty reference
