@@ -1,4 +1,4 @@
-package test.other;
+package org.plixo.jrcos;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,9 +9,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Util class for saving and loading {@link JsonElement}.
+ * a own class can be used!
+ */
 public class Util {
 
-
+    /**
+     * load the file context in a {@link JsonObject}
+     * @param file the file of the saved object
+     * @return the {@link JsonObject} containing the data
+     */
     public static JsonObject loadFromJson(File file) {
         try {
             if (!file.exists()) {
@@ -28,6 +36,11 @@ public class Util {
         }
     }
 
+    /**
+     * saves a file to the disk
+     * @param file where the {@link JsonElement} should be saved
+     * @param json the {@link JsonElement} containing all the data
+     */
     public static void saveJsonObj(File file, JsonElement json) {
         try {
             if (!file.exists()) {
@@ -41,6 +54,10 @@ public class Util {
         }
     }
 
+    /**
+     * will create a file if it doesn't exist.
+     * @param file the location of the file
+     */
     public static void makeFile(File file) {
         if (!file.exists()) {
             try {

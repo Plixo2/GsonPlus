@@ -20,25 +20,25 @@ import java.util.Map;
  */
 public class Initializer {
     /**
-     * Used to alter or create values from the object using the saved data in the {@link JsonElement}.
+     * Used to alter or create values from the reference using the saved data in the {@link JsonElement}.
      *
-     * @param object     The object where values should be altered (or created).
-     * @param jsonObject the {@link JsonElement} where the data for the object is stored. Also used for recursion.
-     * @return the object again (used for the primitives in {@link Mapping} without using the pointer equivalent, like {@link Integer})
+     * @param objectReference The reference where values should be altered (or created).
+     * @param jsonObject the {@link JsonElement} where the data for the reference is stored. Also used for recursion.
+     * @return the reference again (used for the primitives in {@link Mapping} without using the pointer equivalent, like {@link Integer})
      * @throws ReflectiveOperationException for error in instance creation
      */
-    public static Object getObjectFromJson(Object object, JsonElement jsonObject) throws ReflectiveOperationException {
+    public static Object getObject(Object objectReference, JsonElement jsonObject) throws ReflectiveOperationException {
 
-        if (object == null) {
+        if (objectReference == null) {
             throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
         }
         if (jsonObject == null) {
             return null;
         }
-        Class<?> objectClass = object.getClass();
+        Class<?> objectClass = objectReference.getClass();
         if (objectClass.isArray()) {
             JsonArray jsonArray = jsonObject.getAsJsonArray();
-            Object[] objectArray = (Object[]) object;
+            Object[] objectArray = (Object[]) objectReference;
             int safeIterationSize = Math.min(objectArray.length, jsonArray.size());
 
             for (int i = 0; i < safeIterationSize; i++) {
@@ -48,15 +48,15 @@ public class Initializer {
                 if (objectArray[i] == null) {
                     objectArray[i] = createInstance(objectArray.getClass().getComponentType());
                 }
-                objectArray[i] = getObjectFromJson(objectArray[i], entry.getValue());
+                objectArray[i] = getObject(objectArray[i], entry.getValue());
             }
 
-            return object;
+            return objectReference;
 
-        } else if (object instanceof List) {
+        } else if (objectReference instanceof List) {
 
             JsonArray jsonArray = jsonObject.getAsJsonArray();
-            List<Object> list = (List<Object>) object;
+            List<Object> list = (List<Object>) objectReference;
             if (Mapping.overwriteLists) {
                 list.clear();
             }
@@ -65,9 +65,9 @@ public class Initializer {
                 Map.Entry<String, JsonElement> entry = toJsonObject.entrySet().iterator().next();
                 Class<?> clazz = Class.forName(entry.getKey());
                 Object newInstance = createInstance(clazz);
-                list.add(getObjectFromJson(newInstance, entry.getValue()));
+                list.add(getObject(newInstance, entry.getValue()));
             }
-            return object;
+            return objectReference;
 
         } else if (Mapping.primitives.containsKey(objectClass)) {
 
@@ -84,7 +84,7 @@ public class Initializer {
 
                 field.setAccessible(true);
                 JsonElement subObj = jsonObject.getAsJsonObject().get(field.getName());
-                Object objectToUpdate = field.get(object);
+                Object objectToUpdate = field.get(objectReference);
                 if (objectToUpdate == null) {
                     Class<?> type = (Class<?>) field.getGenericType();
                     objectToUpdate = createInstance(type);
@@ -95,7 +95,7 @@ public class Initializer {
 
                     }
                 }
-                Object objectFromJson = getObjectFromJson(objectToUpdate, subObj);
+                Object objectFromJson = getObject(objectToUpdate, subObj);
                 if (objectFromJson == null) {
                     if (!Mapping.useDefaultCase) {
                         continue;
@@ -107,11 +107,11 @@ public class Initializer {
                     }
                 }
 
-                field.set(object, objectFromJson);
+                field.set(objectReference, objectFromJson);
             }
 
         }
-        return object;
+        return objectReference;
     }
 
     /**

@@ -7,7 +7,7 @@ import org.plixo.jrcos.Mapping;
 import org.plixo.jrcos.Serializer;
 import test.car.Car;
 import test.car.Vector2D;
-import test.other.Util;
+import org.plixo.jrcos.Util;
 
 import java.io.File;
 
@@ -24,12 +24,12 @@ public class CarTest {
         try {
             Mapping.overwriteLists = true; //the second list should be cleared and overwritten
 
-            JsonElement object = Serializer.getJsonFromObject(germanCars); //create a JsonElement from the german car
+            JsonElement object = Serializer.getJson(germanCars); //create a JsonElement from the german car
             Util.saveJsonObj(original, object); //safe that to "car/original.json" with own method
             System.out.println("Saved... " + germanCars); //debug print
 
             JsonObject jsonObject = Util.loadFromJson(original); //load from "car/original.json" into the JsonObject
-            Initializer.getObjectFromJson(otherCars, jsonObject); //paste the values into the other car
+            Initializer.getObject(otherCars, jsonObject); //paste the values into the other car
             System.out.println("Loaded.. " + otherCars); //debug with the new values (should be the same)
         } catch (Exception e) {
             e.printStackTrace();

@@ -27,7 +27,7 @@ public class Serializer {
      * @return a {@link JsonElement} for saving or recursive use in an {@link JsonObject}
      * @throws IllegalAccessException for illegal field access
      */
-    public static JsonElement getJsonFromObject(Object object) throws IllegalAccessException {
+    public static JsonElement getJson(Object object) throws IllegalAccessException {
 
         if (object == null) {
             return null;
@@ -40,10 +40,10 @@ public class Serializer {
             Object[] objectArray = (object instanceof List) ? ((List<?>) object).toArray() : (Object[]) object;
             JsonArray jsonArray = new JsonArray();
             for (Object arrayObject : objectArray) {
-                JsonElement other = getJsonFromObject(arrayObject);
+                JsonElement other = getJson(arrayObject);
                 if (other != null) {
                     JsonObject object1 = new JsonObject();
-                    object1.add(arrayObject.getClass().getCanonicalName(), other);
+                    object1.add(arrayObject.getClass().getName(), other);
                     jsonArray.add(object1);
                 }
             }
@@ -59,7 +59,7 @@ public class Serializer {
             JsonObject jsonObject = new JsonObject();
             for (Field field : clazz.getFields()) {
                 Object object1 = field.get(object);
-                JsonElement other = getJsonFromObject(object1);
+                JsonElement other = getJson(object1);
                 if (other != null)
                     jsonObject.add(field.getName(), other);
             }

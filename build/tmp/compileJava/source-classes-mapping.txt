@@ -1,5 +1,5 @@
-test/other/Util.java
- test.other.Util
+test/zoo/math/Vector2D.java
+ test.zoo.math.Vector2D
 test/arrays/RedCube.java
  test.arrays.RedCube
 test/car/Car.java
@@ -12,12 +12,8 @@ test/arrays/World.java
  test.arrays.World
 test/car/Vector2D.java
  test.car.Vector2D
-org/plixo/jrcos/Initializer.java
- org.plixo.jrcos.Initializer
-org/plixo/jrcos/Serializer.java
- org.plixo.jrcos.Serializer
-test/WorldTest.java
- test.WorldTest
+test/zoo/zoo/Giraffe.java
+ test.zoo.zoo.Giraffe
 org/plixo/jrcos/Mapping.java
  org.plixo.jrcos.Mapping
  org.plixo.jrcos.Mapping$1
@@ -32,20 +28,28 @@ org/plixo/jrcos/Mapping.java
  org.plixo.jrcos.Mapping$9
  org.plixo.jrcos.Mapping$IObjectCreation
  org.plixo.jrcos.Mapping$IObjectValue
-test/zoo/math/Vector2D.java
- test.zoo.math.Vector2D
-test/CarTest.java
- test.CarTest
-test/ZooTest.java
- test.ZooTest
-test/zoo/zoo/Animal.java
- test.zoo.zoo.Animal
-test/zoo/zoo/Giraffe.java
- test.zoo.zoo.Giraffe
 test/zoo/zoo/Zoo.java
  test.zoo.zoo.Zoo
-test/zoo/zoo/Rhino.java
- test.zoo.zoo.Rhino
+test/zoo/zoo/Animal.java
+ test.zoo.zoo.Animal
+org/plixo/jrcos/Util.java
+ org.plixo.jrcos.Util
 test/zoo/zoo/Creature.java
  test.zoo.zoo.Creature
  test.zoo.zoo.Creature$DataStruct
+test/zoo/zoo/Rhino.java
+ test.zoo.zoo.Rhino
+test/WorldTest.java
+ test.WorldTest
+test/CarTest.java
+ test.CarTest
+org/plixo/jrcos/Serializer.java
+ org.plixo.jrcos.Serializer
+test/ZooTest.java
+ test.ZooTest
+org/plixo/jrcos/Initializer.java
+ org.plixo.jrcos.Initializer
+test/Small.java
+ test.Small
+ test.Small$DataClass
+ test.Small$Vector2D

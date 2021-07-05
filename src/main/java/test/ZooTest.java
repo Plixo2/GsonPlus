@@ -5,8 +5,7 @@ import com.google.gson.JsonObject;
 import org.plixo.jrcos.Initializer;
 import org.plixo.jrcos.Mapping;
 import org.plixo.jrcos.Serializer;
-import test.other.Util;
-import test.zoo.zoo.Creature;
+import org.plixo.jrcos.Util;
 import test.zoo.zoo.Giraffe;
 import test.zoo.zoo.Rhino;
 import test.zoo.zoo.Zoo;
@@ -29,7 +28,7 @@ public class ZooTest {
 
         try {
            JsonObject object = Util.loadFromJson(location);
-           Initializer.getObjectFromJson(zoo,object);
+           Initializer.getObject(zoo,object);
         } catch (Exception e) {
             System.err.println(e);
             e.printStackTrace();
@@ -38,7 +37,7 @@ public class ZooTest {
        // zoo.creatures.forEach(Creature::advanceAge);
 
         try {
-            JsonElement element = Serializer.getJsonFromObject(zoo);
+            JsonElement element = Serializer.getJson(zoo);
             Util.saveJsonObj(location,element);
         } catch (Exception e) {
             System.err.println(e);
