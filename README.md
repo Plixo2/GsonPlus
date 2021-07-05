@@ -11,35 +11,46 @@ Java Recursive Class Oriented Serializer
 
 ## Settings: (in Mapping.java)
 
-    throwObjectNullException
 > Should a exception be thrown when a object couldn't be created
 
-    boolean overwriteLists
+    throwObjectNullException
+
 > Should the instances be added or the list overwritten
 
-    boolean recursiveFields 
+    boolean overwriteLists
+
 > Should use an recursive function to get all fields in a class, including the superclasses
 
-    boolean useDefaultCase 
+    boolean recursiveFields 
+
 > Should the default case be used if a value couldn't be found or cast
 
-    boolean defaultBooleanCase 
+    boolean useDefaultCase 
+
 > Default case or every boolean
 
-    Number defaultNumberCase 
+    boolean defaultBooleanCase 
+
 > Default case for every number
 
-    char defaultCharacter 
+    Number defaultNumberCase 
+
 > Default case for every character
 
-    String defaultString 
+    char defaultCharacter 
+
 > Default case for every string
 
-    Class defaultClass 
+    String defaultString 
+
 > Default case for every class
 
-    Object defaultObject 
+    Class defaultClass 
+
 > Default case for every object
+
+    Object defaultObject 
+
 
   
 # Code
