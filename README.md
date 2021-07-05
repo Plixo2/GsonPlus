@@ -55,6 +55,8 @@ Java Recursive Class Oriented Serializer
   
 # Code
 
+for more look at [SimpleTest.java](https://github.com/Plixo2/Jrcos/blob/master/src/main/java/test/SimpleTest.java)
+
 ## Save
 
     // convert to Json
@@ -73,3 +75,6 @@ Java Recursive Class Oriented Serializer
     
     // load into the empty reference
     emptyReference = Initializer.getObject(emptyReference,fromFile);
+    
+    
+
