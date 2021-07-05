@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -17,7 +18,10 @@ public class Util {
                 makeFile(file);
                 return null;
             }
-            return JsonParser.parseReader(new java.io.FileReader(file)).getAsJsonObject();
+            FileReader reader = new FileReader(file);
+            JsonObject asJsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+            reader.close();
+            return asJsonObject;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

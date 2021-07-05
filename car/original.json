@@ -6,18 +6,28 @@
 		"x": "1337.0",
 		"y": "420.0",
 		"letters": [
-			"d",
-			"e"
+			{
+				"java.lang.String": "n"
+			},
+			{
+				"java.lang.String": "o"
+			}
 		]
 	},
 	"isRed": "false",
-	"aLong": "85137",
-	"aByte": "-75",
-	"aChar": "\u001B",
-	"aShort": "763",
+	"aLong": "45543",
+	"aByte": "-74",
+	"aChar": "'",
+	"aShort": "519",
 	"names": [
-		"Audi",
-		"BMW",
-		"Mercedes"
+		{
+			"java.lang.String": "Audi"
+		},
+		{
+			"java.lang.String": "BMW"
+		},
+		{
+			"java.lang.String": "Mercedes"
+		}
 	]
 }

@@ -3,6 +3,7 @@ package test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.plixo.jrcos.Initializer;
+import org.plixo.jrcos.Mapping;
 import org.plixo.jrcos.Serializer;
 import test.arrays.World;
 import test.other.Util;
@@ -16,7 +17,7 @@ public class WorldTest {
 
         File original = new File("world/original.json");
         try {
-
+            
             World filledWorld = new World(); //create a world
             filledWorld.fill(); //fill that world with green cubes
             JsonElement object = Serializer.getJsonFromObject(filledWorld); //create a JsonElement from that world

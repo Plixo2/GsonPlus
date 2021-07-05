@@ -3,6 +3,7 @@ package test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.plixo.jrcos.Initializer;
+import org.plixo.jrcos.Mapping;
 import org.plixo.jrcos.Serializer;
 import test.car.Car;
 import test.car.Vector2D;
@@ -21,6 +22,7 @@ public class CarTest {
         Car otherCars = new Car(5, "Other", 2.25f, new Vector2D(6.25, 6), true, "Opel", "Ford", "Ferrari");
 
         try {
+            Mapping.overwriteLists = true; //the second list should be cleared and overwritten
 
             JsonElement object = Serializer.getJsonFromObject(germanCars); //create a JsonElement from the german car
             Util.saveJsonObj(original, object); //safe that to "car/original.json" with own method
@@ -29,7 +31,6 @@ public class CarTest {
             JsonObject jsonObject = Util.loadFromJson(original); //load from "car/original.json" into the JsonObject
             Initializer.getObjectFromJson(otherCars, jsonObject); //paste the values into the other car
             System.out.println("Loaded.. " + otherCars); //debug with the new values (should be the same)
-
         } catch (Exception e) {
             e.printStackTrace();
         }

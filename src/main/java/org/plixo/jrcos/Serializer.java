@@ -41,18 +41,20 @@ public class Serializer {
             JsonArray jsonArray = new JsonArray();
             for (Object arrayObject : objectArray) {
                 JsonElement other = getJsonFromObject(arrayObject);
-                if (other != null)
-                    jsonArray.add(other);
+                if (other != null) {
+                    JsonObject object1 = new JsonObject();
+                    object1.add(arrayObject.getClass().getCanonicalName(), other);
+                    jsonArray.add(object1);
+                }
             }
             return jsonArray;
 
         } else if (Mapping.primitives.containsKey(clazz)) {
 
-            String o = String.valueOf(object);
-            return new JsonPrimitive(o);
+            String value = Mapping.primitives.get(clazz).toString(object);
+            return new JsonPrimitive(value);
 
         } else {
-
             JsonObject jsonObject = new JsonObject();
             for (Field field : clazz.getFields()) {
                 Object object1 = field.get(object);

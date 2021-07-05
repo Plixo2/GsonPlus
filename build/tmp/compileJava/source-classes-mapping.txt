@@ -1,24 +1,26 @@
 test/other/Util.java
  test.other.Util
-test/arrays/GreenCube.java
- test.arrays.GreenCube
+org/plixo/jrcos/Mapping.java
+ org.plixo.jrcos.Mapping
+ org.plixo.jrcos.Mapping$IObjectCreation
+ org.plixo.jrcos.Mapping$IObjectValue
 test/car/Car.java
  test.car.Car
-test/arrays/Cube.java
- test.arrays.Cube
-test/car/Vector2D.java
- test.car.Vector2D
-serializer/Serializer.java
- serializer.Serializer
-serializer/Mapping.java
- serializer.Mapping
- serializer.Mapping$IObjectCreation
- serializer.Mapping$IObjectValue
-test/arrays/World.java
- test.arrays.World
-serializer/Initializer.java
- serializer.Initializer
 test/WorldTest.java
  test.WorldTest
 test/CarTest.java
  test.CarTest
+test/arrays/World.java
+ test.arrays.World
+test/car/Vector2D.java
+ test.car.Vector2D
+org/plixo/jrcos/Serializer.java
+ org.plixo.jrcos.Serializer
+test/arrays/Cube.java
+ test.arrays.Cube
+test/arrays/GreenCube.java
+ test.arrays.GreenCube
+org/plixo/jrcos/Initializer.java
+ org.plixo.jrcos.Initializer
+test/arrays/RedCube.java
+ test.arrays.RedCube
