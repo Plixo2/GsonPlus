@@ -13,6 +13,10 @@ import java.util.HashMap;
 public class Mapping {
 
     /**
+     * the {@link ClassLoader} for loading all classes
+     */
+    public static ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    /**
      * Used in {@link Initializer} and {@link Serializer}
      */
     public static HashMap<Class<?>, IObjectValue<?>> primitives = new HashMap<>();
@@ -30,7 +34,7 @@ public class Mapping {
     /**
      * should a exception be thrown when a object couldn't be created
      */
-    public static boolean throwObjectNullException = false;
+    public static boolean throwObjectNullException = true;
 
     /**
      * default case or every boolean
@@ -77,7 +81,7 @@ public class Mapping {
      * Both Class and primitives are used.
      */
     static {
-        IObjectValue<Integer> integerIObjectValue = new IObjectValue<>() {
+        IObjectValue<Integer> integerIObjectValue = new IObjectValue<Integer>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsInt();
@@ -96,7 +100,7 @@ public class Mapping {
         primitives.put(int.class, integerIObjectValue);
         primitives.put(Integer.class, integerIObjectValue);
 
-        IObjectValue<Long> longIObjectValue = new IObjectValue<>() {
+        IObjectValue<Long> longIObjectValue = new IObjectValue<Long>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsLong();
@@ -115,7 +119,7 @@ public class Mapping {
         primitives.put(long.class, longIObjectValue);
         primitives.put(Long.class, longIObjectValue);
 
-        IObjectValue<Short> shortIObjectValue = new IObjectValue<>() {
+        IObjectValue<Short> shortIObjectValue = new IObjectValue<Short>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsShort();
@@ -134,7 +138,7 @@ public class Mapping {
         primitives.put(short.class, shortIObjectValue);
         primitives.put(Short.class, shortIObjectValue);
 
-        IObjectValue<Byte> byteIObjectValue = new IObjectValue<>() {
+        IObjectValue<Byte> byteIObjectValue = new IObjectValue<Byte>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsByte();
@@ -153,7 +157,7 @@ public class Mapping {
         primitives.put(byte.class, byteIObjectValue);
         primitives.put(Byte.class, byteIObjectValue);
 
-        IObjectValue<Character> characterIObjectValue = new IObjectValue<>() {
+        IObjectValue<Character> characterIObjectValue = new IObjectValue<Character>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsCharacter();
@@ -172,7 +176,7 @@ public class Mapping {
         primitives.put(char.class, characterIObjectValue);
         primitives.put(Character.class, characterIObjectValue);
 
-        IObjectValue<Float> floatIObjectValue = new IObjectValue<>() {
+        IObjectValue<Float> floatIObjectValue = new IObjectValue<Float>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsFloat();
@@ -191,7 +195,7 @@ public class Mapping {
         primitives.put(float.class, floatIObjectValue);
         primitives.put(Float.class, floatIObjectValue);
 
-        IObjectValue<Double> doubleIObjectValue = new IObjectValue<>() {
+        IObjectValue<Double> doubleIObjectValue = new IObjectValue<Double>() {
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 return primitive.getAsDouble();
@@ -210,7 +214,7 @@ public class Mapping {
         primitives.put(double.class, doubleIObjectValue);
         primitives.put(Double.class, doubleIObjectValue);
 
-        IObjectValue<Boolean> booleanIObjectValue = new IObjectValue<>() {
+        IObjectValue<Boolean> booleanIObjectValue = new IObjectValue<Boolean>() {
 
             @Override
             public Object toObject(JsonPrimitive primitive) {
@@ -230,7 +234,7 @@ public class Mapping {
         primitives.put(boolean.class, booleanIObjectValue);
         primitives.put(Boolean.class, booleanIObjectValue);
 
-        IObjectValue<String> stringIObjectValue = new IObjectValue<>() {
+        IObjectValue<String> stringIObjectValue = new IObjectValue<String>() {
 
             @Override
             public Object toObject(JsonPrimitive primitive) {
@@ -249,12 +253,13 @@ public class Mapping {
         };
         primitives.put(String.class, stringIObjectValue);
 
-        IObjectValue<Class<?>> classIObjectValue = new IObjectValue<>() {
+        IObjectValue<Class<?>> classIObjectValue = new IObjectValue<Class<?>>() {
 
             @Override
             public Object toObject(JsonPrimitive primitive) {
                 try {
-                    return Class.forName(primitive.getAsString());
+                    ClassLoader classLoader = Mapping.classLoader != null ? Mapping.classLoader : Thread.currentThread().getContextClassLoader();
+                    return classLoader.loadClass(primitive.getAsString());
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }

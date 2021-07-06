@@ -1,11 +1,13 @@
 package test;
 
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 import org.plixo.jrcos.Initializer;
 import org.plixo.jrcos.Serializer;
 import org.plixo.jrcos.Util;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -62,6 +64,14 @@ public class SimpleTest {
         //empty for instancing
         public Vector2D() {
 
+        }
+
+        @Override
+        public String toString() {
+            return "Vector2D{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
         }
 
         @Override

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +59,9 @@ public class Serializer {
         } else {
             JsonObject jsonObject = new JsonObject();
             for (Field field : clazz.getFields()) {
+                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                    continue;
+                }
                 Object object1 = field.get(object);
                 JsonElement other = getJson(object1);
                 if (other != null)

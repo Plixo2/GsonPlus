@@ -1,11 +1,13 @@
 package test;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.plixo.jrcos.Initializer;
 import org.plixo.jrcos.Mapping;
 import org.plixo.jrcos.Serializer;
 import org.plixo.jrcos.Util;
+import test.zoo.zoo.Creature;
 import test.zoo.zoo.Giraffe;
 import test.zoo.zoo.Rhino;
 import test.zoo.zoo.Zoo;
@@ -34,7 +36,7 @@ public class ZooTest {
             e.printStackTrace();
         }
 
-       // zoo.creatures.forEach(Creature::advanceAge);
+        zoo.creatures.forEach(Creature::advanceAge);
 
         try {
             JsonElement element = Serializer.getJson(zoo);
@@ -44,7 +46,13 @@ public class ZooTest {
             e.printStackTrace();
         }
 
-        //ArrayList
         //Enums
+        //non JsonPrimitives
+        //null values still crash
+        //not found / empty body / not a primitive / (wrong value to cast)
+        //files can extend file.class, but are not the same class
+        //file support
+        //size check in arrays or lists
+        //load with array instead of override
     }
 }

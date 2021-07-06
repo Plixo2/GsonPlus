@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zoo {
-    public List<Creature> creatures = new ArrayList<>();
+    public ArrayList<Creature> creatures = new ArrayList<>();
 
     public void spawn(Class<? extends Creature> creatureClass) {
         try {

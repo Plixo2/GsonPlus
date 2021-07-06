@@ -30,17 +30,29 @@ public class Initializer {
     public static Object getObject(Object objectReference, JsonElement jsonObject) throws ReflectiveOperationException {
 
         if (objectReference == null) {
-            throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
-        }
-        if (jsonObject == null) {
+            if(Mapping.throwObjectNullException) {
+                throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
+            }
             return null;
         }
         Class<?> objectClass = objectReference.getClass();
+        if (jsonObject == null) {
+            if (Mapping.primitives.containsKey(objectClass)) {
+                return Mapping.primitives.get(objectClass).getDefault();
+            } else {
+                Object instance = createInstance(objectClass);
+                if(instance != null) {
+                    return instance;
+                }
+                return Mapping.defaultObject;
+            }
+        }
+
         if (objectClass.isArray()) {
             JsonArray jsonArray = jsonObject.getAsJsonArray();
             Object[] objectArray = (Object[]) objectReference;
             int safeIterationSize = Math.min(objectArray.length, jsonArray.size());
-
+//length of jsonArray and creating of instances as option
             for (int i = 0; i < safeIterationSize; i++) {
                 JsonObject toJsonObject = jsonArray.get(i).getAsJsonObject();
                 Map.Entry<String, JsonElement> entry = toJsonObject.entrySet().iterator().next();
@@ -78,7 +90,7 @@ public class Initializer {
 
             for (Field field : objectClass.getFields()) {
 
-                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers())) {
+                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
                     continue;
                 }
 
@@ -86,7 +98,7 @@ public class Initializer {
                 JsonElement subObj = jsonObject.getAsJsonObject().get(field.getName());
                 Object objectToUpdate = field.get(objectReference);
                 if (objectToUpdate == null) {
-                    Class<?> type = (Class<?>) field.getGenericType();
+                    Class<?> type = field.getType();
                     objectToUpdate = createInstance(type);
                     if (objectToUpdate == null && Mapping.throwObjectNullException) {
                         throw new NullPointerException(type.getName() + " couldn't be created. " +
@@ -121,15 +133,18 @@ public class Initializer {
      */
     static Object createInstance(Class<?> instanceClass) throws ReflectiveOperationException {
 
-        if (Mapping.objectAdapters.containsKey(instanceClass)) {
-            return Mapping.objectAdapters.get(instanceClass).createObject();
+        ClassLoader classLoader = Mapping.classLoader != null ? Mapping.classLoader : Thread.currentThread().getContextClassLoader();
+        Class<?> type = classLoader.loadClass(instanceClass.getName());
+
+        if (Mapping.objectAdapters.containsKey(type)) {
+            return Mapping.objectAdapters.get(type).createObject();
         }
 
-        if (instanceClass.isArray()) {
-            return Array.newInstance(instanceClass.getComponentType(), 0);
+        if (type.isArray()) {
+            return Array.newInstance(type.getComponentType(), 0);
         }
 
-        for (Constructor<?> constructor : instanceClass.getConstructors()) {
+        for (Constructor<?> constructor : type.getConstructors()) {
             if (constructor.getParameterCount() == 0) {
                 return constructor.newInstance();
             }
