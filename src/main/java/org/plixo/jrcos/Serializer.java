@@ -36,6 +36,7 @@ public class Serializer {
 
         Class<?> clazz = object.getClass();
 
+
         if (clazz.isArray() || object instanceof List) {
 
             Object[] objectArray = (object instanceof List) ? ((List<?>) object).toArray() : (Object[]) object;
@@ -50,6 +51,9 @@ public class Serializer {
             }
             return jsonArray;
 
+        } else if (clazz.isEnum()) {
+                Enum<?> anEnum = ((Enum<?>) object);
+                return new JsonPrimitive(anEnum.name());
         } else if (Mapping.primitives.containsKey(clazz)) {
 
             Mapping.IObjectValue<Object> iObjectValue = (Mapping.IObjectValue<Object>) Mapping.primitives.get(clazz);

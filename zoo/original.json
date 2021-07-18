@@ -1,1 +1,1 @@
-{"creatures":[{"test.zoo.zoo.Giraffe":{"age":"6","dead":"true"}},{"test.zoo.zoo.Rhino":{"age":"4","dead":"true"}}]}
+{"creatures":[{"test.zoo.zoo.Giraffe":{"age":"6","dead":"true","type":"LAND"}},{"test.zoo.zoo.Rhino":{"age":"4","dead":"true","type":"WATER"}}]}

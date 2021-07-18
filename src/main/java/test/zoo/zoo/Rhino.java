@@ -8,6 +8,6 @@ public class Rhino extends Animal{
 
     @Override
     public void onDeath() {
-        System.out.println("Nilpferd ist tot :(");
+        System.out.println("Rhino is dead :(");
     }
 }

@@ -67,6 +67,11 @@ public class Mapping {
     public static Object defaultObject = null;
 
     /**
+     * default case for every enum
+     */
+    public static Enum<?> defaultEnum = null;
+
+    /**
      * should the instances be added or the list be overwritten
      */
     public static boolean overwriteLists = false;

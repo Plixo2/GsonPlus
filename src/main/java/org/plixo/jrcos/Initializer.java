@@ -4,7 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 
@@ -23,14 +26,14 @@ public class Initializer {
      * Used to alter or create values from the reference using the saved data in the {@link JsonElement}.
      *
      * @param objectReference The reference where values should be altered (or created).
-     * @param jsonObject the {@link JsonElement} where the data for the reference is stored. Also used for recursion.
+     * @param jsonObject      the {@link JsonElement} where the data for the reference is stored. Also used for recursion.
      * @return the reference again (used for the primitives in {@link Mapping} without using the pointer equivalent, like {@link Integer})
      * @throws ReflectiveOperationException for error in instance creation
      */
     public static Object getObject(Object objectReference, JsonElement jsonObject) throws ReflectiveOperationException {
 
         if (objectReference == null) {
-            if(Mapping.throwObjectNullException) {
+            if (Mapping.throwObjectNullException) {
                 throw new NullPointerException("The Object is null. Use an adapter or initialize your fields");
             }
             return null;
@@ -41,13 +44,12 @@ public class Initializer {
                 return Mapping.primitives.get(objectClass).getDefault();
             } else {
                 Object instance = createInstance(objectClass);
-                if(instance != null) {
+                if (instance != null) {
                     return instance;
                 }
                 return Mapping.defaultObject;
             }
         }
-
         if (objectClass.isArray()) {
             JsonArray jsonArray = jsonObject.getAsJsonArray();
             Object[] objectArray = (Object[]) objectReference;
@@ -81,6 +83,15 @@ public class Initializer {
             }
             return objectReference;
 
+        } else if (objectClass.isEnum()) {
+            String type = jsonObject.getAsJsonPrimitive().getAsString();
+            Enum<?>[] enumConstants = ((Enum<?>) objectReference).getDeclaringClass().getEnumConstants();
+            for (Enum<?> enumConstant : enumConstants) {
+                if (enumConstant.name().equalsIgnoreCase(type)) {
+                    return enumConstant;
+                }
+            }
+            return Mapping.defaultEnum;
         } else if (Mapping.primitives.containsKey(objectClass)) {
 
             Mapping.IObjectValue<?> iObjectValue = Mapping.primitives.get(objectClass);
