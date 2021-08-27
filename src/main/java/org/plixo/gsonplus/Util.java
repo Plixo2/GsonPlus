@@ -1,4 +1,4 @@
-package org.plixo.jrcos;
+package org.plixo.gsonplus;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * Util class for saving and loading {@link JsonElement}.
- * a own class can be used!
+ * another class can be used!
  */
 public class Util {
 

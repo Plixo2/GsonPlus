@@ -1,4 +1,4 @@
-package test.arrays;
+package test.world;
 
 public class RedCube extends Cube {
 

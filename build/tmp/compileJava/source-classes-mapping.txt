@@ -1,57 +1,56 @@
+org/plixo/gsonplus/Util.java
+ org.plixo.gsonplus.Util
 test/zoo/zoo/Giraffe.java
  test.zoo.zoo.Giraffe
+test/world/Cube.java
+ test.world.Cube
+test/zoo/math/Vector2D.java
+ test.zoo.math.Vector2D
+test/world/World.java
+ test.world.World
+test/world/GreenCube.java
+ test.world.GreenCube
+test/zoo/zoo/Creature.java
+ test.zoo.zoo.Creature
+ test.zoo.zoo.Creature$Type
+test/zoo/zoo/Zoo.java
+ test.zoo.zoo.Zoo
+test/world/RedCube.java
+ test.world.RedCube
+test/zoo/zoo/Animal.java
+ test.zoo.zoo.Animal
+test/zoo/zoo/Rhino.java
+ test.zoo.zoo.Rhino
+test/car/Car.java
+ test.car.Car
+test/car/Vector2D.java
+ test.car.Vector2D
+test/WorldTest.java
+ test.WorldTest
 test/SimpleTest.java
  test.SimpleTest
  test.SimpleTest$DataClass
  test.SimpleTest$Vector2D
-test/car/Car.java
- test.car.Car
-test/WorldTest.java
- test.WorldTest
-test/zoo/zoo/Zoo.java
- test.zoo.zoo.Zoo
+org/plixo/gsonplus/GsonPlusConfig.java
+ org.plixo.gsonplus.GsonPlusConfig
+ org.plixo.gsonplus.GsonPlusConfig$1
+ org.plixo.gsonplus.GsonPlusConfig$10
+ org.plixo.gsonplus.GsonPlusConfig$11
+ org.plixo.gsonplus.GsonPlusConfig$2
+ org.plixo.gsonplus.GsonPlusConfig$3
+ org.plixo.gsonplus.GsonPlusConfig$4
+ org.plixo.gsonplus.GsonPlusConfig$5
+ org.plixo.gsonplus.GsonPlusConfig$6
+ org.plixo.gsonplus.GsonPlusConfig$7
+ org.plixo.gsonplus.GsonPlusConfig$8
+ org.plixo.gsonplus.GsonPlusConfig$9
+ org.plixo.gsonplus.GsonPlusConfig$IDefaultObject
+ org.plixo.gsonplus.GsonPlusConfig$IObjectValue
+org/plixo/gsonplus/GsonPlus.java
+ org.plixo.gsonplus.GsonPlus
 test/CarTest.java
  test.CarTest
-test/arrays/World.java
- test.arrays.World
-test/car/Vector2D.java
- test.car.Vector2D
-org/plixo/jrcos/Serializer.java
- org.plixo.jrcos.Serializer
-org/plixo/jrcos/Initializer.java
- org.plixo.jrcos.Initializer
-test/zoo/math/Vector2D.java
- test.zoo.math.Vector2D
-org/plixo/jrcos/Util.java
- org.plixo.jrcos.Util
-test/zoo/zoo/Creature.java
- test.zoo.zoo.Creature
- test.zoo.zoo.Creature$Type
-test/arrays/RedCube.java
- test.arrays.RedCube
-test/zoo/zoo/Animal.java
- test.zoo.zoo.Animal
-org/plixo/jrcos/Mapping.java
- org.plixo.jrcos.Mapping
- org.plixo.jrcos.Mapping$1
- org.plixo.jrcos.Mapping$10
- org.plixo.jrcos.Mapping$2
- org.plixo.jrcos.Mapping$3
- org.plixo.jrcos.Mapping$4
- org.plixo.jrcos.Mapping$5
- org.plixo.jrcos.Mapping$6
- org.plixo.jrcos.Mapping$7
- org.plixo.jrcos.Mapping$8
- org.plixo.jrcos.Mapping$9
- org.plixo.jrcos.Mapping$IObjectCreation
- org.plixo.jrcos.Mapping$IObjectValue
-test/Different.java
- test.Different
-test/arrays/Cube.java
- test.arrays.Cube
-test/arrays/GreenCube.java
- test.arrays.GreenCube
-test/zoo/zoo/Rhino.java
- test.zoo.zoo.Rhino
+org/plixo/gsonplus/GsonPlusBuilder.java
+ org.plixo.gsonplus.GsonPlusBuilder
 test/ZooTest.java
  test.ZooTest

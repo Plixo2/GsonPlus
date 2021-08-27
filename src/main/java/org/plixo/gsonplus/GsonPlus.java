@@ -1,4 +1,4 @@
-package org.plixo.jrcos;
+package org.plixo.gsonplus;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Saves all data from a given object, including all unknown objects.
  * Arrays and list are also getting saved.
- * Primitives (int, short, byte, long, char, float, double, boolean, String) are directly saved via {@link Mapping.IObjectValue} in {@link Mapping}
+ * Primitives (int, short, byte, long, char, float, double, boolean, String) are directly saved via {@link GsonPlusConfig.IObjectValue} in {@link GsonPlusConfig}
  *
  * @author Plixo
- * @see Initializer for loading
+ * @see GsonPlusBuilder for loading
  */
-public class Serializer {
+public class GsonPlus {
 
     /**
      * Used to save the data from an object to a {@link JsonObject}, which can later be saved.
@@ -28,7 +28,7 @@ public class Serializer {
      * @return a {@link JsonElement} for saving or recursive use in an {@link JsonObject}
      * @throws IllegalAccessException for illegal field access
      */
-    public static JsonElement getJson(Object object) throws IllegalAccessException {
+    public JsonElement toJson(Object object) throws IllegalAccessException,NullPointerException {
 
         if (object == null) {
             return null;
@@ -36,13 +36,12 @@ public class Serializer {
 
         Class<?> clazz = object.getClass();
 
-
         if (clazz.isArray() || object instanceof List) {
 
             Object[] objectArray = (object instanceof List) ? ((List<?>) object).toArray() : (Object[]) object;
             JsonArray jsonArray = new JsonArray();
             for (Object arrayObject : objectArray) {
-                JsonElement other = getJson(arrayObject);
+                JsonElement other = toJson(arrayObject);
                 if (other != null) {
                     JsonObject object1 = new JsonObject();
                     object1.add(arrayObject.getClass().getName(), other);
@@ -52,38 +51,40 @@ public class Serializer {
             return jsonArray;
 
         } else if (clazz.isEnum()) {
-                Enum<?> anEnum = ((Enum<?>) object);
-                return new JsonPrimitive(anEnum.name());
-        } else if (Mapping.primitives.containsKey(clazz)) {
 
-            Mapping.IObjectValue<Object> iObjectValue = (Mapping.IObjectValue<Object>) Mapping.primitives.get(clazz);
+            Enum<?> anEnum = ((Enum<?>) object);
+            return new JsonPrimitive(anEnum.name());
+
+        } else if (GsonPlusConfig.getAllPrimitives().containsKey(clazz)) {
+
+            GsonPlusConfig.IObjectValue<Object> iObjectValue = (GsonPlusConfig.IObjectValue<Object>) GsonPlusConfig.getAllPrimitives().get(clazz);
             String value = iObjectValue.toString(object);
             return new JsonPrimitive(value);
 
         } else {
+
             JsonObject jsonObject = new JsonObject();
             for (Field field : clazz.getFields()) {
                 if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
                     continue;
                 }
                 Object object1 = field.get(object);
-                JsonElement other = getJson(object1);
+                JsonElement other = toJson(object1);
                 if (other != null)
                     jsonObject.add(field.getName(), other);
             }
             return jsonObject;
 
         }
-
     }
 
     /**
-     * can be used for all fields in the super classes
+     * could be used...
      *
      * @param clazz the class, where the recursive search starts
      * @return the full list of all fields
      */
-    static List<Field> getFields(Class<?> clazz) {
+    private List<Field> getFields(Class<?> clazz) {
         List<Field> fields = new ArrayList<>();
         Class<?> current = clazz;
         while (current.getSuperclass() != null) {

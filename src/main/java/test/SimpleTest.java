@@ -1,34 +1,38 @@
 package test;
 
 import com.google.gson.*;
-import org.plixo.jrcos.Initializer;
-import org.plixo.jrcos.Serializer;
-import org.plixo.jrcos.Util;
+import org.plixo.gsonplus.GsonPlusBuilder;
+import org.plixo.gsonplus.GsonPlus;
+import org.plixo.gsonplus.Util;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class SimpleTest {
 
-    static File file = new File("file.json");
+
 
     public static void main(String[] args) throws Exception {
 
-        //create DataClass with values and save to file
+        System.out.println("GsonPlus v1.5 2D Simple Example");
+
+        File file = new File("file.json");
+
+        //create DataClass with values and save it to a file
         DataClass original = new DataClass();
         original.list.add(new Vector2D(1,2));
         original.list.add(new Vector2D(10,15));
-        JsonElement toJson = Serializer.getJson(original);
+        GsonPlus gsonPlus = new GsonPlus(); //instance for saving
+        JsonElement toJson = gsonPlus.toJson(original);
         Util.saveJsonObj(file,toJson);
 
         //load data from file and load into an empty DataClass
         DataClass copy = new DataClass();
         JsonElement fromFile = Util.loadFromJson(file);
-        copy = (DataClass) Initializer.getObject(copy,fromFile);
+        GsonPlusBuilder gsonPlusBuilder = new GsonPlusBuilder(); //instance for building
+        copy = (DataClass) gsonPlusBuilder.create(copy,fromFile);
 
         System.out.println(copy.toString());
         //should have the same Vectors

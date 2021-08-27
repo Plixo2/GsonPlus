@@ -15,6 +15,7 @@ public class Car {
     public byte aByte = (byte) (Math.random() * 200);
     public char aChar = (char) (Math.random() * 100);
     public short aShort = (short) (Math.random() * 1000);
+    public Runnable runnableTest = () -> System.out.println("Hello World!");
 
     public List<String> names;
 
