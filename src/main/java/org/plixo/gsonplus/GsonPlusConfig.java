@@ -87,6 +87,10 @@ public class GsonPlusConfig {
      */
     private static boolean lowerArrayClassPriority = false;
 
+    /**
+     * should use the lower class in the array
+     */
+    private static boolean useAnnotations = false;
 
     /*
      * Both Class and primitives are used.
@@ -108,8 +112,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(int.class, integerIObjectValue);
-       addPrimitive(Integer.class, integerIObjectValue);
+        addPrimitive(int.class, integerIObjectValue);
+        addPrimitive(Integer.class, integerIObjectValue);
 
         IObjectValue<Long> longIObjectValue = new IObjectValue<Long>() {
             @Override
@@ -127,8 +131,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(long.class, longIObjectValue);
-       addPrimitive(Long.class, longIObjectValue);
+        addPrimitive(long.class, longIObjectValue);
+        addPrimitive(Long.class, longIObjectValue);
 
         IObjectValue<Short> shortIObjectValue = new IObjectValue<Short>() {
             @Override
@@ -146,8 +150,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(short.class, shortIObjectValue);
-       addPrimitive(Short.class, shortIObjectValue);
+        addPrimitive(short.class, shortIObjectValue);
+        addPrimitive(Short.class, shortIObjectValue);
 
         IObjectValue<Byte> byteIObjectValue = new IObjectValue<Byte>() {
             @Override
@@ -165,8 +169,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(byte.class, byteIObjectValue);
-       addPrimitive(Byte.class, byteIObjectValue);
+        addPrimitive(byte.class, byteIObjectValue);
+        addPrimitive(Byte.class, byteIObjectValue);
 
         IObjectValue<Character> characterIObjectValue = new IObjectValue<Character>() {
             @Override
@@ -184,8 +188,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(char.class, characterIObjectValue);
-       addPrimitive(Character.class, characterIObjectValue);
+        addPrimitive(char.class, characterIObjectValue);
+        addPrimitive(Character.class, characterIObjectValue);
 
         IObjectValue<Float> floatIObjectValue = new IObjectValue<Float>() {
             @Override
@@ -203,8 +207,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(float.class, floatIObjectValue);
-       addPrimitive(Float.class, floatIObjectValue);
+        addPrimitive(float.class, floatIObjectValue);
+        addPrimitive(Float.class, floatIObjectValue);
 
         IObjectValue<Double> doubleIObjectValue = new IObjectValue<Double>() {
             @Override
@@ -222,8 +226,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(double.class, doubleIObjectValue);
-       addPrimitive(Double.class, doubleIObjectValue);
+        addPrimitive(double.class, doubleIObjectValue);
+        addPrimitive(Double.class, doubleIObjectValue);
 
         IObjectValue<Boolean> booleanIObjectValue = new IObjectValue<Boolean>() {
 
@@ -242,8 +246,8 @@ public class GsonPlusConfig {
                 return String.valueOf(object);
             }
         };
-       addPrimitive(boolean.class, booleanIObjectValue);
-       addPrimitive(Boolean.class, booleanIObjectValue);
+        addPrimitive(boolean.class, booleanIObjectValue);
+        addPrimitive(Boolean.class, booleanIObjectValue);
 
         IObjectValue<String> stringIObjectValue = new IObjectValue<String>() {
 
@@ -262,7 +266,7 @@ public class GsonPlusConfig {
                 return object;
             }
         };
-       addPrimitive(String.class, stringIObjectValue);
+        addPrimitive(String.class, stringIObjectValue);
 
         IObjectValue<Class<?>> classIObjectValue = new IObjectValue<Class<?>>() {
 
@@ -276,6 +280,7 @@ public class GsonPlusConfig {
                 }
                 return defaultClass;
             }
+
             @Override
             public Class<?> getDefault() {
                 return defaultClass;
@@ -286,28 +291,27 @@ public class GsonPlusConfig {
                 return object.getName();
             }
         };
-       addPrimitive(Class.class, classIObjectValue);
+        addPrimitive(Class.class, classIObjectValue);
 
 
-       IObjectValue<File> fileIObjectValue = new IObjectValue<File>() {
-           @Override
-           public Object toObject(JsonElement primitive) {
-               return new File(primitive.getAsJsonPrimitive().getAsString());
-           }
+        IObjectValue<File> fileIObjectValue = new IObjectValue<File>() {
+            @Override
+            public Object toObject(JsonElement primitive) {
+                return new File(primitive.getAsJsonPrimitive().getAsString());
+            }
 
-           @Override
-           public File getDefault() {
-               return defaultFile;
-           }
+            @Override
+            public File getDefault() {
+                return defaultFile;
+            }
 
-           @Override
-           public String toString(File object) {
-               return object.getAbsolutePath();
-           }
-       };
-       addPrimitive(File.class,fileIObjectValue);
+            @Override
+            public String toString(File object) {
+                return object.getAbsolutePath();
+            }
+        };
+        addPrimitive(File.class, fileIObjectValue);
     }
-
 
 
     public static ClassLoader getClassLoader() {
@@ -414,8 +418,16 @@ public class GsonPlusConfig {
         GsonPlusConfig.lowerArrayClassPriority = lowerArrayClassPriority;
     }
 
-    public static void addPrimitive(Class<?> classTarget,IObjectValue<?> objectValue){
-        primitives.put(classTarget,objectValue);
+    public static void setAnnotationsUse(boolean useAnnotations) {
+        GsonPlusConfig.useAnnotations = useAnnotations;
+    }
+
+    public static boolean shouldUseAnnotations() {
+        return GsonPlusConfig.useAnnotations;
+    }
+
+    public static void addPrimitive(Class<?> classTarget, IObjectValue<?> objectValue) {
+        primitives.put(classTarget, objectValue);
     }
 
     public static HashMap<Class<?>, IObjectValue<?>> getAllPrimitives() {
@@ -423,7 +435,7 @@ public class GsonPlusConfig {
     }
 
     public static <A> void addAdapter(Class<? extends A> classTarget, IDefaultObject<A> objectValue) {
-        objectAdapters.put(classTarget,objectValue);
+        objectAdapters.put(classTarget, objectValue);
     }
 
     public static HashMap<Class<?>, IDefaultObject<?>> getObjectAdapters() {

@@ -14,7 +14,7 @@ import java.io.File;
 public class CarTest {
 
     public static void main(String[] args) {
-        System.out.println("GsonPlus v1.5 2D Car Example");
+        System.out.println("GsonPlus v1.6 2D Car Example");
 
         File original = new File("car/original.json");
 
@@ -23,6 +23,7 @@ public class CarTest {
 
         try {
             GsonPlusConfig.setOverwriteLists(true); //the second list should be cleared and overwritten
+            GsonPlusConfig.setClassLoader(CarTest.class.getClassLoader());
 
             GsonPlus gsonPlus = new GsonPlus(); //instance for saving
             JsonElement object = gsonPlus.toJson(germanCars); //create a JsonElement from the german car

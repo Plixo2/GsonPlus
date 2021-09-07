@@ -1,36 +1,30 @@
-org/plixo/gsonplus/Util.java
- org.plixo.gsonplus.Util
 test/zoo/zoo/Giraffe.java
  test.zoo.zoo.Giraffe
-test/world/Cube.java
- test.world.Cube
-test/zoo/math/Vector2D.java
- test.zoo.math.Vector2D
-test/world/World.java
- test.world.World
-test/world/GreenCube.java
- test.world.GreenCube
+org/plixo/gsonplus/Util.java
+ org.plixo.gsonplus.Util
 test/zoo/zoo/Creature.java
  test.zoo.zoo.Creature
  test.zoo.zoo.Creature$Type
-test/zoo/zoo/Zoo.java
- test.zoo.zoo.Zoo
-test/world/RedCube.java
- test.world.RedCube
-test/zoo/zoo/Animal.java
- test.zoo.zoo.Animal
-test/zoo/zoo/Rhino.java
- test.zoo.zoo.Rhino
-test/car/Car.java
- test.car.Car
+org/plixo/gsonplus/GsonPlusBuilder.java
+ org.plixo.gsonplus.GsonPlusBuilder
+test/world/Cube.java
+ test.world.Cube
+test/ZooTest.java
+ test.ZooTest
 test/car/Vector2D.java
  test.car.Vector2D
-test/WorldTest.java
- test.WorldTest
-test/SimpleTest.java
- test.SimpleTest
- test.SimpleTest$DataClass
- test.SimpleTest$Vector2D
+test/zoo/zoo/Rhino.java
+ test.zoo.zoo.Rhino
+test/world/GreenCube.java
+ test.world.GreenCube
+org/plixo/gsonplus/Serialize.java
+ org.plixo.gsonplus.Serialize
+test/zoo/math/Vector2D.java
+ test.zoo.math.Vector2D
+test/world/RedCube.java
+ test.world.RedCube
+test/world/World.java
+ test.world.World
 org/plixo/gsonplus/GsonPlusConfig.java
  org.plixo.gsonplus.GsonPlusConfig
  org.plixo.gsonplus.GsonPlusConfig$1
@@ -46,11 +40,27 @@ org/plixo/gsonplus/GsonPlusConfig.java
  org.plixo.gsonplus.GsonPlusConfig$9
  org.plixo.gsonplus.GsonPlusConfig$IDefaultObject
  org.plixo.gsonplus.GsonPlusConfig$IObjectValue
+test/car/Car.java
+ test.car.Car
+test/zoo/zoo/Zoo.java
+ test.zoo.zoo.Zoo
+test/zoo/zoo/Animal.java
+ test.zoo.zoo.Animal
+org/plixo/gsonplus/Optional.java
+ org.plixo.gsonplus.Optional
 org/plixo/gsonplus/GsonPlus.java
  org.plixo.gsonplus.GsonPlus
+test/SimpleTest.java
+ test.SimpleTest
+ test.SimpleTest$DataClass
+ test.SimpleTest$Vector2D
+test/WorldTest.java
+ test.WorldTest
 test/CarTest.java
  test.CarTest
-org/plixo/gsonplus/GsonPlusBuilder.java
- org.plixo.gsonplus.GsonPlusBuilder
-test/ZooTest.java
- test.ZooTest
+test/annotation/Node.java
+ test.annotation.Node
+test/AnnotationTest.java
+ test.AnnotationTest
+test/annotation/Player.java
+ test.annotation.Player

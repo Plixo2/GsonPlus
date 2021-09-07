@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.plixo.gsonplus.GsonPlusBuilder;
 import org.plixo.gsonplus.GsonPlus;
+import org.plixo.gsonplus.GsonPlusConfig;
 import test.world.World;
 import org.plixo.gsonplus.Util;
 
@@ -12,11 +13,13 @@ import java.io.File;
 public class WorldTest {
 
     public static void main(String[] args) {
-        System.out.println("GsonPlus v1.5 2D World Example");
+        System.out.println("GsonPlus v1.6 2D World Example");
 
         File original = new File("world/original.json");
+        GsonPlusConfig.setClassLoader(WorldTest.class.getClassLoader());
+
         try {
-            
+
             World filledWorld = new World(); //create a world
             filledWorld.fill(); //fill that world with green cubes
 

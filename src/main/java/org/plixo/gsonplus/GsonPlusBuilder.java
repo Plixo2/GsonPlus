@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +63,7 @@ public class GsonPlusBuilder {
                 String className = entry.getKey();
 
                 if (objectArray[i] == null) {
-                    if(GsonPlusConfig.shouldUseLowerArrayClassPriority()) {
+                    if (GsonPlusConfig.shouldUseLowerArrayClassPriority()) {
                         objectArray[i] = createInstance(objectArray.getClass().getComponentType());
                     } else {
                         objectArray[i] = createInstance(className);
@@ -109,26 +108,24 @@ public class GsonPlusBuilder {
 
         } else {
 
-            for (Field field : objectClass.getFields()) {
-
-                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
-                    continue;
-                }
+            for (Field field : GsonPlus.getFields(objectClass)) {
 
                 field.setAccessible(true);
                 JsonElement subObj = jsonObject.getAsJsonObject().get(field.getName());
                 Object objectToUpdate = field.get(objectReference);
                 if (objectToUpdate == null) {
+                    if (GsonPlusConfig.shouldUseAnnotations() && field.isAnnotationPresent(Optional.class)) {
+                        continue;
+                    } else {
+                        Class<?> type = field.getType();
+                        objectToUpdate = createInstance(type);
+                        if (objectToUpdate == null && GsonPlusConfig.shouldThrowObjectNullException()) {
+                            throw new NullPointerException(type.getName() + " couldn't be created. " +
+                                    "Create an adapter in the mapping class " +
+                                    "or create an empty constructor in " + type.getName());
 
-                    Class<?> type = field.getType();
-                    objectToUpdate = createInstance(type);
-                    if (objectToUpdate == null && GsonPlusConfig.shouldThrowObjectNullException()) {
-                        throw new NullPointerException(type.getName() + " couldn't be created. " +
-                                "Create an adapter in the mapping class " +
-                                "or create an empty constructor in " + type.getName());
-
+                        }
                     }
-
                 }
                 Object objectFromJson = create(objectToUpdate, subObj);
                 if (objectFromJson == null) {

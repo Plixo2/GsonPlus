@@ -3,6 +3,7 @@ package test;
 import com.google.gson.*;
 import org.plixo.gsonplus.GsonPlusBuilder;
 import org.plixo.gsonplus.GsonPlus;
+import org.plixo.gsonplus.GsonPlusConfig;
 import org.plixo.gsonplus.Util;
 
 import java.io.File;
@@ -16,9 +17,11 @@ public class SimpleTest {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("GsonPlus v1.5 2D Simple Example");
+        System.out.println("GsonPlus v1.6 2D Simple Example");
 
         File file = new File("file.json");
+
+        GsonPlusConfig.setClassLoader(SimpleTest.class.getClassLoader());
 
         //create DataClass with values and save it to a file
         DataClass original = new DataClass();
@@ -34,11 +37,16 @@ public class SimpleTest {
         GsonPlusBuilder gsonPlusBuilder = new GsonPlusBuilder(); //instance for building
         copy = (DataClass) gsonPlusBuilder.create(copy,fromFile);
 
-        System.out.println(copy.toString());
-        //should have the same Vectors
+        System.out.println(copy.toString());//should have the same values
 
-        System.out.println(original.hashCode() == copy.hashCode());
-        //should be true
+        boolean state = original.hashCode() == copy.hashCode();//should be true
+        if(state)  {
+            System.out.println("the copy is the same");
+        } else {
+            System.out.println("the copy is not the same, test failed");
+        }
+
+
 
     }
 

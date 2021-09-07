@@ -28,7 +28,7 @@ public class GsonPlus {
      * @return a {@link JsonElement} for saving or recursive use in an {@link JsonObject}
      * @throws IllegalAccessException for illegal field access
      */
-    public JsonElement toJson(Object object) throws IllegalAccessException,NullPointerException {
+    public JsonElement toJson(Object object) throws ReflectiveOperationException, NullPointerException {
 
         if (object == null) {
             return null;
@@ -64,10 +64,9 @@ public class GsonPlus {
         } else {
 
             JsonObject jsonObject = new JsonObject();
-            for (Field field : clazz.getFields()) {
-                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
-                    continue;
-                }
+            for (Field field : getFields(clazz)) {
+
+                field.setAccessible(true);
                 Object object1 = field.get(object);
                 JsonElement other = toJson(object1);
                 if (other != null)
@@ -79,22 +78,52 @@ public class GsonPlus {
     }
 
     /**
-     * could be used...
+     * also used in {@link GsonPlusBuilder}
      *
      * @param clazz the class, where the recursive search starts
      * @return the full list of all fields
      */
-    private List<Field> getFields(Class<?> clazz) {
-        List<Field> fields = new ArrayList<>();
-        Class<?> current = clazz;
-        while (current.getSuperclass() != null) {
-            if (current == Object.class) {
-                break;
+    protected static List<Field> getFields(Class<?> clazz) {
+        List<Field> list = new ArrayList<>();
+
+        if (GsonPlusConfig.shouldUseAnnotations()) {
+            for (Field field : getFieldsUpTo(clazz)) {
+                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                    continue;
+                }
+                if (field.isAnnotationPresent(Serialize.class)) {
+                    list.add(field);
+                }
             }
-            fields.addAll(Arrays.asList(current.getDeclaredFields()));
-            current = current.getSuperclass();
+            return list;
         }
-        return fields;
+
+
+        for (Field field : clazz.getFields()) {
+            if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+            list.add(field);
+        }
+        return list;
     }
 
+    /**
+     * i dont know if this works
+     * src: https://github.com/dancerjohn/LibEx/blob/master/libex/src/main/java/org/libex/reflect/ReflectionUtils.java
+     * @param startClass the start where fields are listed
+     * @return all fields from the last class
+     */
+    public static Iterable<Field> getFieldsUpTo(Class<?> startClass) {
+
+        List<Field> currentClassFields = Arrays.asList(startClass.getDeclaredFields().clone());
+        Class<?> parentClass = startClass.getSuperclass();
+
+        if (parentClass != null && !(parentClass.equals(Object.class))) {
+            List<Field> parentClassFields = (List<Field>) getFieldsUpTo(parentClass);
+            currentClassFields.addAll(parentClassFields);
+        }
+
+        return currentClassFields;
+    }
 }
