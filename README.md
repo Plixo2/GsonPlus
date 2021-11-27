@@ -1,20 +1,65 @@
 # Gson + 
 
-- Use any class to save and load
-- Use public on a field to mark it as Serializable
-- **final** and **transient** fields are ignored
+this libary needs Gson
 
-- Classes in a list will be created, so use an empty constructor for that or write an adapter in the GsonPlusConfig class. 
-- Empty arrays will be created automaticly
+- setup:
 
 
-## Settings: (in GsonPlusConfig.java)
-
--
-  
-# Code
-
-full Example: [SimpleTest.java](https://github.com/Plixo2/GsonPlus/blob/master/src/main/java/test/SimpleTest.java)
-
+      GsonPlusConfig.setOverwriteLists(true); 
     
+      GsonPlusConfig.setUseDefaultCase(false);
+    
+      GsonPlusConfig.setClassLoader(Main.class.getClassLoader()); 
+
+- with Annotations:
+
+    for use with Annotations:
+    
+   - @Serialize to save a field
+
+   - @Optional if the file can be null, and should not be created
+
+
+
+          GsonPlusConfig.setAnnotationsUse(true); 
+    
+     
+    
+
+          
+- without Annotations
+
+   - all public, non final, non static and non transient fields are saved
+
+
+          GsonPlusConfig.setAnnotationsUse(false); 
+          
+          
+      
+- save to a file: 
+
+
+        GsonPlus gsonPlus = new GsonPlus();
+        try {
+	        JsonElement element = gsonPlus.toJson(player);
+	        Util.saveJsonObj(location,element);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        
+- load from a file
+
+
+     - classes need an empty constructor or an adapter (create adapters in GsonPlusBuilder)
+
+
+
+           GsonPlusBuilder gsonPlusBuilder = new GsonPlusBuilder();
+           try {
+	            JsonObject object = Util.loadFromJson(location);
+	            gsonPlusBuilder.create(player,object);
+           } catch (Exception e) {
+	            e.printStackTrace();
+           }
 
