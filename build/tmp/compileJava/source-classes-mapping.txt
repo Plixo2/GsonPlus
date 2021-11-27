@@ -1,24 +1,25 @@
+org/plixo/gsonplus/ExposeField.java
+ org.plixo.gsonplus.ExposeField
 test/zoo/zoo/Giraffe.java
  test.zoo.zoo.Giraffe
 org/plixo/gsonplus/Util.java
  org.plixo.gsonplus.Util
-test/zoo/zoo/Creature.java
- test.zoo.zoo.Creature
- test.zoo.zoo.Creature$Type
-org/plixo/gsonplus/GsonPlusBuilder.java
- org.plixo.gsonplus.GsonPlusBuilder
+test/SimpleTest.java
+ test.SimpleTest
+ test.SimpleTest$DataClass
+ test.SimpleTest$Vector2D
+org/plixo/gsonplus/GsonPlus.java
+ org.plixo.gsonplus.GsonPlus
 test/world/Cube.java
  test.world.Cube
-test/ZooTest.java
- test.ZooTest
+test/WorldTest.java
+ test.WorldTest
 test/car/Vector2D.java
  test.car.Vector2D
 test/zoo/zoo/Rhino.java
  test.zoo.zoo.Rhino
-test/world/GreenCube.java
- test.world.GreenCube
-org/plixo/gsonplus/Serialize.java
- org.plixo.gsonplus.Serialize
+org/plixo/gsonplus/GsonPlusBuilder.java
+ org.plixo.gsonplus.GsonPlusBuilder
 test/zoo/math/Vector2D.java
  test.zoo.math.Vector2D
 test/world/RedCube.java
@@ -44,23 +45,24 @@ test/car/Car.java
  test.car.Car
 test/zoo/zoo/Zoo.java
  test.zoo.zoo.Zoo
-test/zoo/zoo/Animal.java
- test.zoo.zoo.Animal
-org/plixo/gsonplus/Optional.java
- org.plixo.gsonplus.Optional
-org/plixo/gsonplus/GsonPlus.java
- org.plixo.gsonplus.GsonPlus
-test/SimpleTest.java
- test.SimpleTest
- test.SimpleTest$DataClass
- test.SimpleTest$Vector2D
-test/WorldTest.java
- test.WorldTest
 test/CarTest.java
  test.CarTest
-test/annotation/Node.java
- test.annotation.Node
+org/plixo/gsonplus/Optional.java
+ org.plixo.gsonplus.Optional
 test/AnnotationTest.java
  test.AnnotationTest
+org/plixo/gsonplus/HideField.java
+ org.plixo.gsonplus.HideField
+test/world/GreenCube.java
+ test.world.GreenCube
+test/zoo/zoo/Creature.java
+ test.zoo.zoo.Creature
+ test.zoo.zoo.Creature$Type
+test/zoo/zoo/Animal.java
+ test.zoo.zoo.Animal
+test/annotation/Node.java
+ test.annotation.Node
 test/annotation/Player.java
  test.annotation.Player
+test/ZooTest.java
+ test.ZooTest

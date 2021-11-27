@@ -1,13 +1,13 @@
 package test.annotation;
 
 
-import org.plixo.gsonplus.Serialize;
+import org.plixo.gsonplus.ExposeField;
 
 public class Player {
-    @Serialize
     float hp = 0;
 
-    @Serialize
+
+    @ExposeField
     Node linkedList;
 
     public Player() {

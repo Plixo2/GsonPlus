@@ -86,41 +86,36 @@ public class GsonPlus {
     protected static List<Field> getFields(Class<?> clazz) {
         List<Field> list = new ArrayList<>();
 
-        if (GsonPlusConfig.shouldUseAnnotations()) {
-            for (Field field : getFieldsUpTo(clazz)) {
-                if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
-                    continue;
-                }
-                if (field.isAnnotationPresent(Serialize.class)) {
-                    list.add(field);
-                }
-            }
-            return list;
-        }
 
-
-        for (Field field : clazz.getFields()) {
-            if (Modifier.isFinal(field.getModifiers()) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+        for (Field field : getFieldsUpTo(clazz)) {
+            int modifiers = field.getModifiers();
+            if (Modifier.isFinal(modifiers) || Modifier.isTransient(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
-            list.add(field);
+            if (Modifier.isPublic(modifiers) && !field.isAnnotationPresent(HideField.class)) {
+                list.add(field);
+            } else if (field.isAnnotationPresent(ExposeField.class) && !Modifier.isPublic(modifiers)) {
+                list.add(field);
+            }
+
         }
         return list;
     }
 
     /**
-     * i dont know if this works
      * src: https://github.com/dancerjohn/LibEx/blob/master/libex/src/main/java/org/libex/reflect/ReflectionUtils.java
+     *
      * @param startClass the start where fields are listed
      * @return all fields from the last class
      */
-    public static Iterable<Field> getFieldsUpTo(Class<?> startClass) {
+    public static List<Field> getFieldsUpTo(Class<?> startClass) {
 
-        List<Field> currentClassFields = Arrays.asList(startClass.getDeclaredFields().clone());
+        List<Field> currentClassFields = new ArrayList<>();
+        currentClassFields.addAll(Arrays.asList(startClass.getDeclaredFields()));
         Class<?> parentClass = startClass.getSuperclass();
 
         if (parentClass != null && !(parentClass.equals(Object.class))) {
-            List<Field> parentClassFields = (List<Field>) getFieldsUpTo(parentClass);
+            List<Field> parentClassFields = getFieldsUpTo(parentClass);
             currentClassFields.addAll(parentClassFields);
         }
 

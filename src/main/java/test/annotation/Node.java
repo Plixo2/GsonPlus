@@ -1,11 +1,9 @@
 package test.annotation;
 
 import org.plixo.gsonplus.Optional;
-import org.plixo.gsonplus.Serialize;
 
 public class Node {
 
-    @Serialize
     @Optional
     Node next = null;
 

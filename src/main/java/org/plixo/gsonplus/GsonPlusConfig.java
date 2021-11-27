@@ -87,11 +87,6 @@ public class GsonPlusConfig {
      */
     private static boolean lowerArrayClassPriority = false;
 
-    /**
-     * should use the lower class in the array
-     */
-    private static boolean useAnnotations = false;
-
     /*
      * Both Class and primitives are used.
      */
@@ -418,13 +413,6 @@ public class GsonPlusConfig {
         GsonPlusConfig.lowerArrayClassPriority = lowerArrayClassPriority;
     }
 
-    public static void setAnnotationsUse(boolean useAnnotations) {
-        GsonPlusConfig.useAnnotations = useAnnotations;
-    }
-
-    public static boolean shouldUseAnnotations() {
-        return GsonPlusConfig.useAnnotations;
-    }
 
     public static void addPrimitive(Class<?> classTarget, IObjectValue<?> objectValue) {
         primitives.put(classTarget, objectValue);

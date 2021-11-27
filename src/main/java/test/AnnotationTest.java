@@ -28,8 +28,6 @@ public class AnnotationTest {
         GsonPlusConfig.setUseDefaultCase(false);
         GsonPlusConfig.setClassLoader(AnnotationTest.class.getClassLoader());
 
-        GsonPlusConfig.setAnnotationsUse(true); //for use with Annotations
-
 
         GsonPlusBuilder gsonPlusBuilder = new GsonPlusBuilder();
         try {

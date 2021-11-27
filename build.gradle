@@ -21,3 +21,7 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+configurations {
+    jar.archiveName = 'gson-plus1.7.1.jar'
+}

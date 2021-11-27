@@ -114,14 +114,14 @@ public class GsonPlusBuilder {
                 JsonElement subObj = jsonObject.getAsJsonObject().get(field.getName());
                 Object objectToUpdate = field.get(objectReference);
                 if (objectToUpdate == null) {
-                    if (GsonPlusConfig.shouldUseAnnotations() && field.isAnnotationPresent(Optional.class)) {
+                    if (field.isAnnotationPresent(Optional.class)) {
                         continue;
                     } else {
                         Class<?> type = field.getType();
                         objectToUpdate = createInstance(type);
                         if (objectToUpdate == null && GsonPlusConfig.shouldThrowObjectNullException()) {
                             throw new NullPointerException(type.getName() + " couldn't be created. " +
-                                    "Create an adapter in the mapping class " +
+                                    "Create an adapter in the config class " +
                                     "or create an empty constructor in " + type.getName());
 
                         }
@@ -175,6 +175,7 @@ public class GsonPlusBuilder {
         }
 
         for (Constructor<?> constructor : type.getConstructors()) {
+            constructor.setAccessible(true);
             if (constructor.getParameterCount() == 0) {
                 return constructor.newInstance();
             }
