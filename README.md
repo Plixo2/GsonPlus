@@ -1,44 +1,22 @@
 # Gson + 
 
-this libary needs Gson
+this libary needs gson
 
-- setup:
-
-
-      GsonPlusConfig.setOverwriteLists(true); 
     
-      GsonPlusConfig.setUseDefaultCase(false);
-    
+   - all public or @Serialize annotated, non final, non static, non transient  fields are saved
+   - @Hidefield to not save a field
+   - @Optional if the field can be null, and should not be created
+
+
+# setup
+```java
+      GsonPlusConfig.setOverwriteLists(true);
       GsonPlusConfig.setClassLoader(Main.class.getClassLoader()); 
+```
 
-- with Annotations:
-
-    for use with Annotations:
-    
-   - @Serialize to save a field
-
-   - @Optional if the file can be null, and should not be created
-
-
-
-          GsonPlusConfig.setAnnotationsUse(true); 
-    
      
-    
-
-          
-- without Annotations
-
-   - all public, non final, non static and non transient fields are saved
-
-
-          GsonPlusConfig.setAnnotationsUse(false); 
-          
-          
-      
-- save to a file: 
-
-
+# save to a file
+```java
         GsonPlus gsonPlus = new GsonPlus();
         try {
 	        JsonElement element = gsonPlus.toJson(player);
@@ -46,15 +24,11 @@ this libary needs Gson
         } catch (Exception e) {
         	e.printStackTrace();
         }
+```       
         
-        
-- load from a file
+# load from a file
 
-
-     - classes need an empty constructor or an adapter (create adapters in GsonPlusBuilder)
-
-
-
+```java
            GsonPlusBuilder gsonPlusBuilder = new GsonPlusBuilder();
            try {
 	            JsonObject object = Util.loadFromJson(location);
@@ -62,4 +36,4 @@ this libary needs Gson
            } catch (Exception e) {
 	            e.printStackTrace();
            }
-
+```
