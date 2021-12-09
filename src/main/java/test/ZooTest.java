@@ -19,7 +19,7 @@ public class ZooTest {
 
     public static void main(String[] args) {
 
-        System.out.println("GsonPlus v1.6 2D Zoo Example");
+        System.out.println("GsonPlus v1.7.1 2D Zoo Example");
 
         Zoo zoo = new Zoo();
         zoo.spawn(Giraffe.class);

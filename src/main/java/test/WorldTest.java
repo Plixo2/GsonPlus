@@ -13,7 +13,7 @@ import java.io.File;
 public class WorldTest {
 
     public static void main(String[] args) {
-        System.out.println("GsonPlus v1.6 2D World Example");
+        System.out.println("GsonPlus v1.7.1 2D World Example");
 
         File original = new File("world/original.json");
         GsonPlusConfig.setClassLoader(WorldTest.class.getClassLoader());

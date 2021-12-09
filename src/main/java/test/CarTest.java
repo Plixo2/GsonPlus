@@ -14,7 +14,7 @@ import java.io.File;
 public class CarTest {
 
     public static void main(String[] args) {
-        System.out.println("GsonPlus v1.6 2D Car Example");
+        System.out.println("GsonPlus v1.7.1 2D Car Example");
 
         File original = new File("car/original.json");
 

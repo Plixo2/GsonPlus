@@ -16,8 +16,7 @@ public class SimpleTest {
 
 
     public static void main(String[] args) throws Exception {
-
-        System.out.println("GsonPlus v1.6 2D Simple Example");
+        System.out.println("GsonPlus v1.7.1 2D Simple Example");
 
         File file = new File("file.json");
 
