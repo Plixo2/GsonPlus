@@ -1,6 +1,6 @@
 # Gson + 
 
-this libary needs gson
+
 
     
    - all public or @Serialize annotated, non final, non static, non transient  fields are saved
